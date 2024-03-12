@@ -6,25 +6,52 @@ class hash_Table:
         self.length = length
         self.hash_array = [None] * self.length
 
+    # Retrieves the specific bucket list at the hash index
+    def get_hash_bucket(self, key):
+        hash_index = hash(key) % len(self.hash_array)
+        hash_bucket = self.hash_array[hash_index]
+        return hash_bucket
+
     # Inserts a new (key, value), or if key exists in hash bucket, will update value. Returns true if successful.
     def insert_item(self, key, value):
         
-        hash_index = hash(key) % len(self.hash_array)
-        
-        # Retrieves the specific bucket list at the hash index
-        hash_bucket = self.hash_array[hash_index]
+        bucket = self.get_hash_bucket(key)
 
         # Updates value if (key, value) already present
-        for key_value in hash_bucket:
-            print("New key value pair: "+ key_value)
+        for key_value in bucket:
             
             if key_value[0] == key:
-                kv[1] = value
+                print("Inserted key value pairs: "+ key_value)
+                key_value[1] = value
                 return True
         
         # If (key, value) not already present, appends to end of list in bucket.
         new_key_value = [key, value]
-        hash_bucket.append(new_key_value)
+        bucket.append(new_key_value)
         return True
+
+    # Searches for value matching a given key in a bucket. Returns value if found, else None.
+    def search_item(self, key):
+        
+        bucket = self.get_hash_bucket(key)
+
+        for key_value in bucket:
+            
+            if key_value[0] == key:
+                print("Found key value pair: "+ key_value)
+                return key_value[1]
+            
+        return None
+
+    def remove_item(self, key):
+
+        bucket = self.get_hash_bucket(key)
+
+        for key_value in bucket:
+            
+            if key_value[0] == key:
+                print("Removed key value pair: "+ key_value)
+                bucket.remove([key_value[0], key_value[1]])
+
 
 
