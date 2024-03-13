@@ -1,14 +1,21 @@
 
-# Class that manages hash table, uses chaining to handle collisions
+
+'''
+Class that manages a hash table, uses chaining to handle collisions.
+The length / size of the hash table can be set in the params.
+Contains methods to insert or update, search for, and delete items from the hash table.
+'''
 class hash_Table:
-    def __init__(self, length = 40):
+    
+    # Constructor - Initializes the hash table to the desired length, with an empty list initialized in each of the buckets.
+    def __init__(self, length:int = 40):
         
         self.length = length
-        self.hash_array = [None] * self.length
+        self.hash_array = [[] for _ in range(self.length)]
 
-    # Retrieves the specific bucket list at the hash index
+    # Retrieves the specific bucket list at the hash index.
     def get_hash_bucket(self, key):
-        hash_index = hash(key) % len(self.hash_array)
+        hash_index = hash(key) % self.length
         hash_bucket = self.hash_array[hash_index]
         return hash_bucket
 
@@ -17,15 +24,19 @@ class hash_Table:
         
         bucket = self.get_hash_bucket(key)
 
-        # Updates value if (key, value) already present
-        for key_value in bucket:
+        # updates value if (key, value) already present
+        for key_value in enumerate(bucket):
             
             if key_value[0] == key:
-                print("Inserted key value pairs: "+ key_value)
+                print("--------------------------------")
+                print("Inserted key value pairs:")
+                print("Key:",key_value[0],"\n")
+                print("Package information:", key_value[1], "\n")
+                print("--------------------------------")
                 key_value[1] = value
                 return True
         
-        # If (key, value) not already present, appends to end of list in bucket.
+        # CHAINING - if (key, value) not already present, appends to end of list in bucket.
         new_key_value = [key, value]
         bucket.append(new_key_value)
         return True
@@ -38,20 +49,40 @@ class hash_Table:
         for key_value in bucket:
             
             if key_value[0] == key:
-                print("Found key value pair: "+ key_value)
+                print("--------------------------------")
+                print("Searched and found key value pair:")
+                print("Item searched:",key_value[0],"\n")
+                print("Package information:", key_value[1], "\n")
+                print("--------------------------------")
+
                 return key_value[1]
-            
+        print("ERROR Key:Value pair not found.")
         return None
 
-    def remove_item(self, key):
+    # Removes an item from hash table if the searched key matches an existing key in a bucket.
+    def remove_item(self, key_to_delete):
 
-        bucket = self.get_hash_bucket(key)
+        bucket = self.get_hash_bucket(key_to_delete)
 
         for key_value in bucket:
             
-            if key_value[0] == key:
-                print("Removed key value pair: "+ key_value)
+            if key_value[0] == key_to_delete:
+                print("--------------------------------")
+                print("Removed key value pair:")
+                print("Item searched:",key_value[0],"\n")
+                print("Package information:", key_value[1], "\n")
+                print("--------------------------------")
+
                 bucket.remove([key_value[0], key_value[1]])
 
+    # Prints out each bucket of hash table.
+    def print_hash_table(self):
+        for index, bucket in enumerate(self.hash_array):
+            if bucket:
+                print(f"Bucket {index}:")
+                for key, value in bucket:
+                    print(f"{key} : {value}")
 
+            else:
+                print(f"Bucket {index}: Empty")
 
