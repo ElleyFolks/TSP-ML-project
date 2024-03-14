@@ -28,11 +28,11 @@ class hash_Table:
         for key_value in enumerate(bucket):
             
             if key_value[0] == key:
-                print("--------------------------------")
-                print("Inserted key value pairs:")
-                print("Key:",key_value[0],"\n")
-                print("Package information:", key_value[1], "\n")
-                print("--------------------------------")
+                #print("--------------------------------")
+                #print("Inserted key value pairs:")
+                #print("Key:",key_value[0],"\n")
+                #print("Package information:", key_value[1], "\n")
+                #print("--------------------------------")
                 key_value[1] = value
                 return True
         
@@ -49,11 +49,11 @@ class hash_Table:
         for key_value in bucket:
             
             if key_value[0] == key:
-                print("--------------------------------")
-                print("Searched and found key value pair:")
-                print("Item searched:",key_value[0],"\n")
-                print("Package information:", key_value[1], "\n")
-                print("--------------------------------")
+                # print("--------------------------------")
+                # print("Searched and found key value pair:")
+                # print("Item searched:",key_value[0],"\n")
+                # print("Package information:", key_value[1], "\n")
+                # print("--------------------------------")
 
                 return key_value[1]
         print("ERROR Key:Value pair not found.")
@@ -67,11 +67,11 @@ class hash_Table:
         for key_value in bucket:
             
             if key_value[0] == key_to_delete:
-                print("--------------------------------")
-                print("Removed key value pair:")
-                print("Item searched:",key_value[0],"\n")
-                print("Package information:", key_value[1], "\n")
-                print("--------------------------------")
+                # print("--------------------------------")
+                # print("Removed key value pair:")
+                # print("Item searched:",key_value[0],"\n")
+                # print("Package information:", key_value[1], "\n")
+                # print("--------------------------------")
 
                 bucket.remove([key_value[0], key_value[1]])
 

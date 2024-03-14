@@ -24,14 +24,13 @@ class Package:
         self.currentLocation = "HUB"
         
         # these are set separately outside of this class
+        self.status = "HUB"
         self.departureTime = None
         self.deliveryTime = None
 
     # A string representation of a package object, formatted to print all package information.
     def __str__(self):
-        return f"Package ID: {self.packageId}, Address: {self.address}, {self.city}, {self.state}, {self.zipCode}, 
-        Deadline: {self.deadline}, Weight: {self.weight} lbs, Current Location: {self.currentLocation}, 
-        Departure Time: {self.departureTime}, Deliver Time: {self.deliveryTime}"
+        return f"Package ID: {self.packageId}, Address: {self.address}, {self.city}, {self.state}, {self.zipCode}, Deadline: {self.deadline}, Weight: {self.weight} lbs, Current Location: {self.currentLocation}, Departure Time: {self.departureTime}, Deliver Time: {self.deliveryTime}"
 
     # Creates a package object from a row passed in of the CSV.
     def createNewPackage(row):
