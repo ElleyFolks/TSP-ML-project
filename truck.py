@@ -43,7 +43,7 @@ class Delivery_Truck:
                 package:Package = package_hash_table.search_item(id)
                 destinationHub: Hub = hub_hash_table.search_item(package.getDestinationAddress())
                 
-                # gets distance from desination hub
+                # gets distance from destination hub
                 distance = destinationHub.getDistance(current_location)
                 
                 # gets distance from current hub
@@ -53,14 +53,14 @@ class Delivery_Truck:
 
                 distance = float(distance)
 
-                print(f"\nPackage: {package.packageId}, Location: {current_location}, Destination: {destinationHub.address}, Distance: {distance}")
+                #print(f"\nPackage: {package.packageId}, Location: {current_location}, Destination: {destinationHub.address}, Distance: {distance}")
 
                 # tests for package with least distance
                 if distance < min_distance:
                     min_distance = distance
                     min_package = package
 
-                    print("-Minimum Distance Found:",min_distance,"\n")
+                    #print("-Minimum Distance Found:",min_distance,"\n")
 
             # Calculate delivery time
             current_time = current_time + dt.timedelta(hours= min_distance/18)
@@ -75,5 +75,5 @@ class Delivery_Truck:
             self.miles += min_distance
             current_location = min_package.getDestinationAddress()
 
-            print(f"\n----Package delivered!----\n Package ID: {min_package.packageId}, Time: {min_package.deliveryTime}," 
-                  f"Deadline: {min_package.deadline}, Current Location: {current_location}, Miles traveled so far: {self.miles}")
+            #print(f"\n----Package delivered!----\n Package ID: {min_package.packageId}, Time: {min_package.deliveryTime}," 
+                  #f"Deadline: {min_package.deadline}, Current Location: {current_location}, Miles traveled so far: {self.miles}")

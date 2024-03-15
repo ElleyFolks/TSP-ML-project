@@ -56,7 +56,7 @@ class hash_Table:
                 # print("--------------------------------")
 
                 return key_value[1]
-        print("ERROR Key:Value pair not found.")
+        print(f"ERROR Key:Value pair for searched {key} not found.")
         return None
 
     # Removes an item from hash table if the searched key matches an existing key in a bucket.
