@@ -30,7 +30,7 @@ def main():
 
     # combined distance traveled of each truck (must be under 140 miles)
     total_distance = delivery_truck_1.miles + delivery_truck_2.miles + delivery_truck_3.miles
-    print(f"*--__-- Truck total milage is {total_distance} miles. --__--*")
+    print(f"*--__-- Trucks TOTAL milage is {total_distance} miles. --__--*\n")
 
 
 def wgups_UI():
@@ -46,26 +46,77 @@ def wgups_UI():
 
         # Option 1 - generating status report for all packages at a given time
         if user_choice == '1':
-            user_time_str:str = input("        Please enter the time (24 hour HH:mm:ss) you want to see the status of all packages.")
-            (entered_hrs, entered_min, entered_sec) = user_time_str.split(':')
-            
-            user_time = dt.timedelta(hours = int(entered_hrs), minutes= int(entered_min), seconds= int(entered_sec))
+            try:
+                user_time_str:str = input("        Please enter the time (24 hour HH:mm:ss) you want to see the status of all packages.\n")
+                (entered_hrs, entered_min, entered_sec) = user_time_str.split(':')
+                
+                user_time = dt.timedelta(hours = int(entered_hrs), minutes= int(entered_min), seconds= int(entered_sec))
 
-            # gets info for packages 0 - 39 (40 total)
-            for i in range(1,41):
-                searched_package:Package = packageHashTable.search_item(i)
+                # gets info for packages 0 - 39 (40 total)
+                for i in range(1,41):
+                    searched_package:Package = packageHashTable.search_item(i)
 
-                if searched_package.departureTime < user_time < searched_package.deliveryTime:
-                    print("-->--> Package status - EN ROUTE -->-->")
-                    print("        Package Info:", searched_package)
+                    if searched_package.departureTime < user_time < searched_package.deliveryTime:
+                        print("-->--> Package status - EN ROUTE -->-->")
+                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                              f"\n       by {searched_package.deadline}"
+                              )
 
-                elif user_time < searched_package.departureTime:
-                    print("-----| Package status - AT HUB |-----")
-                    print("        Package Info:", searched_package)
+                    elif user_time <= searched_package.departureTime:
+                        print("-----| Package status - AT HUB |-----")
+                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                              f"\n       by {searched_package.deadline}"
+                              )
 
-                else:
-                    print("-->--x Package status - DELIVERED -->--x")
-                    print("        Package Info:", searched_package)
+                    else:
+                        print("-->--x Package status - DELIVERED -->--x")
+                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                              f"\n       by {searched_package.deadline}"
+                              )
+
+            except ValueError:
+                print("--X-- Not an option. Returning to main menu. --X--")
+
+        if user_choice == '2':
+            try:
+                # getting time
+                user_time_str:str = input("        Please enter the time (24 hour HH:mm:ss) you want to see the status of a package.\n")
+                (entered_hrs, entered_min, entered_sec) = user_time_str.split(':')
+                
+                user_time = dt.timedelta(hours = int(entered_hrs), minutes= int(entered_min), seconds= int(entered_sec))
+
+                # getting package ID
+                user_package_id: int = int(input("        Enter the package ID.\n"))
+
+                # gets info for one package
+                if 0 < user_package_id < 41:
+                    searched_package:Package = packageHashTable.search_item(user_package_id)
+
+                    if searched_package.departureTime < user_time < searched_package.deliveryTime:
+                        print("-->--> Package status - EN ROUTE -->-->")
+                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                              f"\n       by {searched_package.deadline}"
+                              )
+                    elif user_time <= searched_package.departureTime:
+                        print("-----| Package status - AT HUB |-----")
+                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                              f"\n       by {searched_package.deadline}"
+                              )
+
+                    else:
+                        print("-->--x Package status - DELIVERED -->--x")
+                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                              f"\n       by {searched_package.deadline}"
+                              )
+
+            except ValueError:
+                print("--X-- Not a valid package ID. Must be from 1 - 40. Returning to main menu. --X--")
 
         elif user_choice == '3':
             using_menu = False
@@ -76,8 +127,25 @@ def wgups_UI():
 if __name__ == "__main__":
     
     print("*--__-- WGUPS Postal Delivery Service --__--*","\n")
+    print("""                                         
+ .----------------------------------......._____       |
+ |______________________________________________`_,    |
+ |  .--------------..--------------.  |.----------,\   |
+ |  |                              |  ||           \\  |
+ |  \                              /  ||            \\ |
+ |  /                              \  ||             \\|_
+ |  `--------------..------------- '  ||              \\/ .---------.
+ |____________________________________||_______________\\_(_________)_
+ | .---.                        .---. |                `%,------------~-.
+ | |(O)|  WGUPS Postal Service  |(O)| |  __             |               |
+(| `---'                        `---' | (- \            |               |)
+(|                                    |  ~~             |               |
+ |                                    |                 |               |
+ |       __,---,__                    |                `%,  __,---,__   |_
+=|______//       \\___________________|_________________|__//       \\__|_]
+        |   .-.   |                                        |   .-.   |
+        |   `-'   |                                        |   `-'   |
+         \_     _/                                          \_     _/
+           `---'                                              `---'""")
     main()
     wgups_UI()
-
-    
-
