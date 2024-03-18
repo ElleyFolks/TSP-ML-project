@@ -26,7 +26,7 @@ class Delivery_Truck:
 
     '''
     Function that implements greedy algorithm.
-    Removes a package from package hash table when delivered.
+    Removes a package from package list when delivered.
     Tracks truck distance and time of each delivery.
     '''
     def deliver_packages(self, package_hash_table: hash_Table, hub_hash_table: hash_Table):
