@@ -33,6 +33,22 @@ def main():
     print(f"*--__-- Trucks TOTAL milage is {total_distance} miles. --__--*\n")
 
 
+def print_package_9_info(user_time:dt, package:Package):
+    
+    corrected_time = dt.timedelta(hours=10, minutes=20)
+                            
+    if user_time < corrected_time:
+        print(f"        Package ID: {package.packageId}. \n       Delivery time: {package.deliveryTime}.",
+            f"\n       Must be delivered to the address: {package.address} {package.city} {package.state} {package.zipCode}", 
+            f"\n       by {package.deadline}"
+            )
+        
+    if user_time>= corrected_time:
+        print(f"        Package ID: {package.packageId}. \n       Delivery time: {package.deliveryTime}.",
+            f"\n       Must be delivered to the address: 410 S. State St., Salt Lake City, UT 84111", 
+            f"\n       by {package.deadline}"
+            )
+
 def wgups_UI():
 
     using_menu: bool = True
@@ -56,26 +72,46 @@ def wgups_UI():
                 for i in range(1,41):
                     searched_package:Package = packageHashTable.search_item(i)
 
-                    if searched_package.departureTime < user_time < searched_package.deliveryTime:
-                        print("-->--> Package status - EN ROUTE -->-->")
-                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
-                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                              f"\n       by {searched_package.deadline}"
-                              )
+                    # package at hub, not in transit
+                    if user_time <= searched_package.departureTime:
+                        
+                        if searched_package.packageId == 9:
+                            print("-----| Package status - AT HUB |-----")
+                            print_package_9_info(user_time, searched_package)
 
-                    elif user_time <= searched_package.departureTime:
-                        print("-----| Package status - AT HUB |-----")
-                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
-                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                              f"\n       by {searched_package.deadline}"
-                              )
+                        else:
+                            print("-----| Package status - AT HUB |-----")
+                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                                f"\n       by {searched_package.deadline}"
+                                )
 
+                    # package in transit
+                    elif searched_package.departureTime < user_time < searched_package.deliveryTime:
+                        
+                        if searched_package.packageId == 9:
+                            print("-->--> Package status - EN ROUTE -->-->")
+                            print_package_9_info(user_time, searched_package)
+
+                        else:
+                            print("-->--> Package status - EN ROUTE -->-->")
+                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                                f"\n       by {searched_package.deadline}"
+                                )
+                    
+                    # package delivered
                     else:
-                        print("-->--x Package status - DELIVERED -->--x")
-                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
-                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                              f"\n       by {searched_package.deadline}"
-                              )
+                        if searched_package.packageId == 9:
+                            print("-->--x Package status - DELIVERED -->--x")
+                            print_package_9_info(user_time, searched_package)
+
+                        else:
+                            print("-->--x Package status - DELIVERED -->--x")
+                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                                f"\n       by {searched_package.deadline}"
+                                )
 
             except ValueError:
                 print("--X-- Not an option. Returning to main menu. --X--")
@@ -95,25 +131,50 @@ def wgups_UI():
                 if 0 < user_package_id < 41:
                     searched_package:Package = packageHashTable.search_item(user_package_id)
 
-                    if searched_package.departureTime < user_time < searched_package.deliveryTime:
-                        print("-->--> Package status - EN ROUTE -->-->")
-                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
-                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                              f"\n       by {searched_package.deadline}"
-                              )
-                    elif user_time <= searched_package.departureTime:
-                        print("-----| Package status - AT HUB |-----")
-                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
-                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                              f"\n       by {searched_package.deadline}"
-                              )
+                    # package at hub, not in transit
+                    if user_time <= searched_package.departureTime:
+                        
+                        if searched_package.packageId == 9:
+                            print("-----| Package status - AT HUB |-----")
+                            print_package_9_info(user_time, searched_package)
 
+                        else:
+                            print("-----| Package status - AT HUB |-----")
+                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                                f"\n       by {searched_package.deadline}"
+                                )
+
+                    # package in transit
+                    elif searched_package.departureTime < user_time < searched_package.deliveryTime:
+                        
+                        if searched_package.packageId == 9:
+                            print("-->--> Package status - EN ROUTE -->-->")
+                            print_package_9_info(user_time, searched_package)
+
+                        else:
+                            print("-->--> Package status - EN ROUTE -->-->")
+                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                                f"\n       by {searched_package.deadline}"
+                                )
+
+                    # package delivered
                     else:
-                        print("-->--x Package status - DELIVERED -->--x")
-                        print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
-                              f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                              f"\n       by {searched_package.deadline}"
-                              )
+                        
+                        if searched_package.packageId == 9:
+                            print("-->--x Package status - DELIVERED -->--x")
+                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                                    f"\n       Must be delivered to the address: 410 S. State St., Salt Lake City, UT 84111", 
+                                    f"\n       by {searched_package.deadline}"
+                                    )
+
+                        else:
+                            print("-->--x Package status - DELIVERED -->--x")
+                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.deliveryTime}.",
+                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
+                                f"\n       by {searched_package.deadline}"
+                                )
 
             except ValueError:
                 print("--X-- Not a valid package ID. Must be from 1 - 40. Returning to main menu. --X--")
