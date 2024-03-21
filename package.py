@@ -1,16 +1,18 @@
+# IDENTIFICATION - Name: Elley Folks, Student ID: 010139574 
+
 import csv
 from hash_Table import hash_Table
 
-'''
-Class that represents a package.
-The package object has the information imported from the WGUPS Package CSV file, which has the following attributes:
-package ID, address, city, state, zip, date to be delivered by, and package weight.
-
-The delivery time and departure time are set elsewhere, and are not in the package file.
-
-This class implements methods to read in package information from a CSV, create new package objects, and get the package destination address.
-'''
 class Package:
+    '''
+    Class that represents a package.
+    The package object has the information imported from the WGUPS Package CSV file, which has the following attributes:
+    package ID, address, city, state, zip, date to be delivered by, and package weight.
+
+    The delivery time and departure time are set in the delivery function when a package is en route and delivered, and are not found in the package file.
+
+    This class implements methods to read in package information from a CSV, create new package objects, and get the package destination address.
+    '''
     # Constructor - Initializes attributes of package object.
     def __init__(self, packageId, address, city, state, zipCode, deadline, weight):
         # loaded from CSV
@@ -21,16 +23,17 @@ class Package:
         self.zipCode = zipCode
         self.deadline = deadline
         self.weight = weight
-        self.currentLocation = "HUB"
+        self.present_Location = "HUB"
         
         # these are set separately outside of this class
-        self.status = "HUB"
-        self.departureTime = None
-        self.deliveryTime = None
+        self.delivery_status = "HUB"
+        self.departure_time = None
+        self.delivery_time = None
+
 
     # A string representation of a package object, formatted to print all package information.
     def __str__(self):
-        return f"Package ID: {self.packageId}, Address: {self.address}, {self.city}, {self.state}, {self.zipCode}, Deadline: {self.deadline}, Weight: {self.weight} lbs, Current Location: {self.currentLocation}, Departure Time: {self.departureTime}, Deliver Time: {self.deliveryTime}"
+        return f"Package ID: {self.packageId}, Address: {self.address}, {self.city}, {self.state}, {self.zipCode}, Deadline: {self.deadline}, Weight: {self.weight} lbs, Current Location: {self.present_Location}, Delivery Status: {self.delivery_status}, Departure Time: {self.departure_time}, Deliver Time: {self.delivery_time}"
 
     # Creates a package object from a row passed in of the CSV.
     def createNewPackage(row):

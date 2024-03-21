@@ -1,13 +1,15 @@
+# IDENTIFICATION - Name: Elley Folks, Student ID: 010139574 
+
 import csv
 from hash_Table import hash_Table
 
-'''
-The class the represents a hub location. 
-The hub contains the name of a location, address, and distances from this location to every other location.
-This class implements methods to initialize, import hubs from a CSV file,
-and a method to get the distance from one point to another.
-'''
 class Hub:
+    '''
+    The class the represents a hub location. 
+    The hub contains the name of a location, address, and distances from this location to every other location.
+    This class implements methods to initialize, import hubs from a CSV file,
+    and a method to get the distance from one point to another.
+    '''
 
     # Constructor - Initializes location, address and distances from every other location to this one.
     def __init__(self, location: str, address: str, distances: float):
