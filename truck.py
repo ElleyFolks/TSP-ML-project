@@ -2,30 +2,37 @@
 
 import datetime as dt
 from package import Package
-from hash_Table import hash_Table
+from hash_Table import hash_table
 from hub import Hub
 
 
 class Delivery_Truck:
     '''
-    This class represents a deliver truck that delivers packages.
+    This class represents a delivery truck that delivers packages.
+    
     The initial location of the truck is at the central HUB.
+    
     It contains attributes of the packages on the truck, the time the truck left the hub, time taken to deliver, milage traveled by truck, and current location of truck.
     It contains the method for package delivery.
     '''
+
     # Constructor - Initializes attributes of the truck.
     def __init__(self, packages:list = None, truck_departure_time = None):
+        
+        # Initializing attributes.
+        packages.sort()
         self.truck_package_list = packages
+        self.initial_package_list = packages.copy()
         self.truck_departure_time = truck_departure_time 
         self.time = truck_departure_time
         self.miles = 0
 
-        # initial location at HUB
+        # Initial location at HUB.
         self.current_location = "HUB"
         return
 
-    
-    def deliver_packages(self, package_hash_table: hash_Table, hub_hash_table: hash_Table):
+    # FLOW - Function that delivers packages to their destination.
+    def deliver_packages(self, package_hash_table: hash_table, hub_hash_table: hash_table):
         '''
         Function that implements greedy algorithm.
         Removes a package from package list when delivered.
@@ -52,12 +59,12 @@ class Delivery_Truck:
                 destinationHub: Hub = hub_hash_table.search_item(package.getDestinationAddress())
                 
                 # gets distance from destination hub
-                package_distance = destinationHub.getDistance(present_location)
+                package_distance = destinationHub.get_distance(present_location)
                 
                 # protection in the case that distance is empty
                 if(package_distance == None):
                     package_hub: Hub = hub_hash_table.search_item(present_location)
-                    package_distance = package_hub.getDistance(package.getDestinationAddress())
+                    package_distance = package_hub.get_distance(package.getDestinationAddress())
 
                 package_distance = float(package_distance)
 

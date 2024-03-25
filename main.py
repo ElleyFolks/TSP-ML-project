@@ -3,15 +3,16 @@
 import datetime as dt
 from package import Package
 from hub import Hub
-from hash_Table import hash_Table
+from hash_Table import hash_table
 from truck import Delivery_Truck
+from user_interface import delivery_menu as menu
 
 # creating hash tables, storing data from CSVs into buckets
-packageHashTable = hash_Table(length=40)
+packageHashTable = hash_table(length=40)
 Package.importPackages(packageHashTable)
 
-hubHashTable = hash_Table(length=30)
-Hub.importHubs(hubHashTable)
+hubHashTable = hash_table(length=30)
+Hub.import_hubs(hubHashTable)
 
 def main():
 
@@ -32,167 +33,16 @@ def main():
 
     # combined distance traveled of each truck (must be under 140 miles)
     total_distance = delivery_truck_1.miles + delivery_truck_2.miles + delivery_truck_3.miles
-    return total_distance
 
-
-def print_package_9_info(user_time:dt, package:Package):
-    
-    corrected_time = dt.timedelta(hours=10, minutes=20)
-                            
-    if user_time < corrected_time:
-        print(f"        Package ID: {package.packageId}. \n       Delivery time: {package.delivery_time}.",
-            f"\n       Must be delivered to the address: {package.address} {package.city} {package.state} {package.zipCode}", 
-            f"\n       by {package.deadline}"
-            )
-        
-    if user_time>= corrected_time:
-        print(f"        Package ID: {package.packageId}. \n       Delivery time: {package.delivery_time}.",
-            f"\n       Must be delivered to the address: 410 S. State St., Salt Lake City, UT 84111", 
-            f"\n       by {package.deadline}"
-            )
-
-def wgups_UI():
-
-    using_menu: bool = True
-
-    while(using_menu == True):
-        print("        Please select an option below.", "\n")
-        print("        1 -- View ALL packages / delivery status in a given time range.")
-        print("        2 -- View ONE package / delivery status in a given time range.")
-        print("        3 -- View total milage of all trucks.")
-        print("        4 -- Exit program.")
-        user_choice = input("        Enter the number (1, 2, or 3) of the option you want to select.\n")
-
-        # Option 1 - generating status report for all packages at a given time
-        if user_choice == '1':
-            try:
-                user_time_str:str = input("        Please enter the time (24 hour HH:mm:ss) you want to see the status of all packages.\n")
-                (entered_hrs, entered_min, entered_sec) = user_time_str.split(':')
-                
-                user_time = dt.timedelta(hours = int(entered_hrs), minutes= int(entered_min), seconds= int(entered_sec))
-
-                # gets info for packages 0 - 39 (40 total)
-                for i in range(1,41):
-                    searched_package:Package = packageHashTable.search_item(i)
-
-                    # package at hub, not in transit
-                    if user_time <= searched_package.departure_time:
-                        
-                        if searched_package.packageId == 9:
-                            print("-----| Package status - AT HUB |-----")
-                            print_package_9_info(user_time, searched_package)
-
-                        else:
-                            print("-----| Package status - AT HUB |-----")
-                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.delivery_time}.",
-                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                                f"\n       by {searched_package.deadline}"
-                                )
-
-                    # package in transit
-                    elif searched_package.departure_time < user_time < searched_package.delivery_time:
-                        
-                        if searched_package.packageId == 9:
-                            print("-->--> Package status - EN ROUTE -->-->")
-                            print_package_9_info(user_time, searched_package)
-
-                        else:
-                            print("-->--> Package status - EN ROUTE -->-->")
-                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.delivery_time}.",
-                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                                f"\n       by {searched_package.deadline}"
-                                )
-                    
-                    # package delivered
-                    else:
-                        if searched_package.packageId == 9:
-                            print("-->--x Package status - DELIVERED -->--x")
-                            print_package_9_info(user_time, searched_package)
-
-                        else:
-                            print("-->--x Package status - DELIVERED -->--x")
-                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.delivery_time}.",
-                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                                f"\n       by {searched_package.deadline}"
-                                )
-
-            except ValueError:
-                print("--X-- Not an option. Returning to main menu. --X--")
-
-        if user_choice == '2':
-            try:
-                # getting time
-                user_time_str:str = input("        Please enter the time (24 hour HH:mm:ss) you want to see the status of a package.\n")
-                (entered_hrs, entered_min, entered_sec) = user_time_str.split(':')
-                
-                user_time = dt.timedelta(hours = int(entered_hrs), minutes= int(entered_min), seconds= int(entered_sec))
-
-                # getting package ID
-                user_package_id: int = int(input("        Enter the package ID.\n"))
-
-                # gets info for one package
-                if 0 < user_package_id < 41:
-                    searched_package:Package = packageHashTable.search_item(user_package_id)
-
-                    # package at hub, not in transit
-                    if user_time <= searched_package.departure_time:
-                        
-                        if searched_package.packageId == 9:
-                            print("-----| Package status - AT HUB |-----")
-                            print_package_9_info(user_time, searched_package)
-
-                        else:
-                            print("-----| Package status - AT HUB |-----")
-                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.delivery_time}.",
-                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                                f"\n       by {searched_package.deadline}"
-                                )
-
-                    # package in transit
-                    elif searched_package.departure_time < user_time < searched_package.delivery_time:
-                        
-                        if searched_package.packageId == 9:
-                            print("-->--> Package status - EN ROUTE -->-->")
-                            print_package_9_info(user_time, searched_package)
-
-                        else:
-                            print("-->--> Package status - EN ROUTE -->-->")
-                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.delivery_time}.",
-                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                                f"\n       by {searched_package.deadline}"
-                                )
-
-                    # package delivered
-                    else:
-                        
-                        if searched_package.packageId == 9:
-                            print("-->--x Package status - DELIVERED -->--x")
-                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.delivery_time}.",
-                                    f"\n       Must be delivered to the address: 410 S. State St., Salt Lake City, UT 84111", 
-                                    f"\n       by {searched_package.deadline}"
-                                    )
-
-                        else:
-                            print("-->--x Package status - DELIVERED -->--x")
-                            print(f"        Package ID: {searched_package.packageId}. \n       Delivery time: {searched_package.delivery_time}.",
-                                f"\n       Must be delivered to the address: {searched_package.address} {searched_package.city} {searched_package.state} {searched_package.zipCode}", 
-                                f"\n       by {searched_package.deadline}"
-                                )
-
-            except ValueError:
-                print("--X-- Not a valid package ID. Must be from 1 - 40. Returning to main menu. --X--")
-
-        if user_choice =='3':
-            print(f"*--__-- Total milage traveled by all delivery trucks {total_milage} miles. --__--*")
-        
-        elif user_choice == '4':
-            using_menu = False
-            print("*--__-- Thankyou for shipping with WGUPS! Exiting program. --__--*")
-            exit()
-
+    print(f"\n --*-- Total milage of all trucks: {total_distance} miles. --*--\n")
+    return delivery_truck_1, delivery_truck_2, delivery_truck_3, total_distance
 
 if __name__ == "__main__":
     
     print("*--__-- WGUPS Postal Delivery Service --__--*","\n")
-    total_milage = main()
-    wgups_UI()
+    truck_1, truck_2, truck_3, total_milage = main()
+    
+    # FLOW - Creating user interface for viewing package status and total milage with specific truck objects.
+    interface = menu(truck_1, truck_2, truck_3, total_milage, packageHashTable)
+    interface.user_menu()
+    

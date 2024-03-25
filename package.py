@@ -1,7 +1,7 @@
 # IDENTIFICATION - Name: Elley Folks, Student ID: 010139574 
 
 import csv
-from hash_Table import hash_Table
+from hash_Table import hash_table
 
 class Package:
     '''
@@ -41,7 +41,7 @@ class Package:
         return Package(int(pId), pAddress, pCity, pState, pZip, pDeadline, pWeight)
     
     # Creates a new package per row, for every row in CSV.
-    def importPackages(package_hash_table: hash_Table):
+    def importPackages(package_hash_table: hash_table):
         with open("WGUPS Package File.csv") as csvFile:
             csvReader = csv.reader(csvFile, delimiter=",")
             for row in csvReader:

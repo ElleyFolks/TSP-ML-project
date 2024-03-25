@@ -1,7 +1,9 @@
 # IDENTIFICATION - Name: Elley Folks, Student ID: 010139574 
 
-class hash_Table:
+class hash_table:
     '''
+    Section A of rubric.
+    
     Class that manages a hash table, uses chaining to handle collisions.
 
     Contains methods to insert, update, and search for items from the hash table.
@@ -21,36 +23,45 @@ class hash_Table:
             ValueError: If the provided length is not a positive integer.
         '''
 
-        # checks if valid integer was passed in params
+        # PROCESS - Checks if valid integer was passed in params.
         if not isinstance(length, int) or length <= 0:
             raise ValueError("Length of hash table must be a positive integer.")
         
         else:
-            # creates hash table with specified length / size
+            # PROCESS - Creates hash table with specified length / size.
             self.length = length
             self.hash_array = [[] for _ in range(self.length)]
 
-
-    def insert_item(self, key, value):
+    # Section A of rubric.
+    def insert_item(self, package_Id, value):
         '''
         Inserts a new (key, value), or if key exists in hash bucket, will update value. Returns true if successful.
+
+        Parameters:
+            package_Id (hashable): The key to be inserted or updated.
+            value: The value associated with the key.
+
+        Returns:
+            bool: True if the insertion or update is successful.
         '''
         
-        bucket = self.get_hash_bucket(key)
+        # PROCESS - Gets the hash bucket of the corresponding key passed in.
+        bucket = self.get_hash_bucket(package_Id)
 
-        # updates value if (key, value) already present
+        # PROCESS - Updates value if (key, value) already present.
         for key_value in enumerate(bucket):
             
-            if key_value[0] == key:
+            if key_value[0] == package_Id:
                 key_value[1] = value
                 return True
         
-        # CHAINING - if (key, value) not already present, appends to end of list in bucket.
-        new_key_value = [key, value]
+        # If the (key, value) pair is new and hashes to a non-empty bucket, it will append to the list in the bucket.
+        new_key_value = [package_Id, value]
         bucket.append(new_key_value)
         return True
     
-
+    # Section B of rubric.
+    # FLOW - Searches for a value matching a given key in a bucket in a hash table.
     def search_item(self, key):
         '''
         Searches for value matching a given key in a bucket. Returns value if found, else None.
@@ -62,8 +73,10 @@ class hash_Table:
             The value associated with the given key if found, otherwise returns None.
         '''
         
+        # PROCESS - Gets the hash bucket of the corresponding key passed in.
         bucket = self.get_hash_bucket(key)
 
+        # PROCESS - Searches for key in bucket.
         for key_value in bucket:
             
             if key_value[0] == key:
@@ -71,10 +84,23 @@ class hash_Table:
             
         print(f"ERROR Key:Value pair for searched {key} not found.")
         return None
-    
 
-    # Retrieves the specific bucket list at the hash index.
+    # FLOW - Retrieves the specific bucket list at the hash index.
     def get_hash_bucket(self, key):
-        hash_index = hash(key) % self.length
+        """
+        Given a key, returns the bucket at the hash index of the key.
+
+        Parameters:
+        - key: The key used to calculate the hash index.
+
+        Returns:
+        - hash_bucket: The bucket at the hash index of the key.
+        """
+
+        # PROCESS - Calculates the hash index of the key using built in python hash() function.
+        hash_index = hash(key) % self.length # takes modulus of length so hash within bounds.
+        
+        # PROCESS - Retrieves the bucket at the hash index from hash table.
         hash_bucket = self.hash_array[hash_index]
+
         return hash_bucket
