@@ -1,5 +1,6 @@
 # IDENTIFICATION - Name: Elley Folks, Student ID: 010139574 
 
+# RUBRIC - Section A of rubric, hash table.
 class hash_table:
     '''
     Section A of rubric.
@@ -32,7 +33,9 @@ class hash_table:
             self.length = length
             self.hash_array = [[] for _ in range(self.length)]
 
-    # Section A of rubric.
+
+    # RUBRIC - Section A of rubric, insertion function.
+        # FLOW - Inserts a new (key, value) pair into the hash table, or updates the value if the key already exists.
     def insert_item(self, package_Id, value):
         '''
         Inserts a new (key, value), or if key exists in hash bucket, will update value. Returns true if successful.
@@ -59,9 +62,10 @@ class hash_table:
         new_key_value = [package_Id, value]
         bucket.append(new_key_value)
         return True
-    
-    # Section B of rubric.
-    # FLOW - Searches for a value matching a given key in a bucket in a hash table.
+
+
+    # RUBRIC - Section B of rubric look-up function.
+        # FLOW - Searches for a value in a hash table bucket matching the given key .
     def search_item(self, key):
         '''
         Searches for value matching a given key in a bucket. Returns value if found, else None.
@@ -84,6 +88,7 @@ class hash_table:
             
         print(f"ERROR Key:Value pair for searched {key} not found.")
         return None
+
 
     # FLOW - Retrieves the specific bucket list at the hash index.
     def get_hash_bucket(self, key):
