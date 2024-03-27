@@ -42,26 +42,26 @@ class delivery_menu():
 
         # FLOW - User types in number to select option from menu.
         while(using_menu == True):
-            print("        Please select an option below.", "\n")
+            print("        Please select an action below.", "\n")
             print("        1 -*- View ALL packages / delivery status in a given time range.")
             print("        2 -*- View ONE package / delivery status in a given time range.")
             print("        3 -*- View total milage of all trucks.")
             print("        4 -*- Exit program.")
-            user_choice = input("        Enter the number (1, 2, 3, or 4) of the option you want to select.\n")
+            user_choice = input("        Enter the number (1, 2, 3, or 4) of the action you want to perform.\n")
 
             # PROCESS - Option 1, generating status report for all packages at a given time.
             if user_choice == '1':
                 try:
                     self.generate_report_all_packages()
                 except ValueError:
-                    print("--X-- Not an option. Returning to main menu. --X--")  
+                    print("\n--X-- Not an action. Please select a valid action from below. --X--\n")  
 
             # PROCESS - Option 2, generating status report for one package at a given time.
             elif user_choice == '2':
                 try:
                     self.generate_report_for_package()
                 except ValueError:
-                    print("--X-- Not a valid package ID. Must be from 1 - 40. Returning to main menu. --X--")
+                    print("\n--X-- Not an action. Please select a valid action from below. --X--\n")
 
             # PROCESS - Option 3, displaying total milage of all trucks.
             elif user_choice =='3':
@@ -70,7 +70,7 @@ class delivery_menu():
             # PROCESS - Option 4, exiting program.
             elif user_choice == '4':
                 using_menu = False
-                print("*--__-- Thankyou for shipping with WGUPS! Quitting program. --__--*")
+                print("*--__-- Quitting program. Thankyou for shipping with WGUPS. --__--*")
                 exit()
             
             # PROCESS - Invalid option entered.
@@ -80,13 +80,19 @@ class delivery_menu():
 
     # FLOW - Gets time from user.
     def get_user_time(self):
-        # PROCESS - Gets time string from user.
-        user_time_str:str = input("        Enter the time (24 hour HH:mm:ss) you want to see the package(s) status.\n")
+        try:
+            # PROCESS - Gets time string from user.
+            user_time_str:str = input("        Enter the time (24 hour HH:mm:ss) you want to see the package(s) status.\n")
+            
+            # PROCESS - Splits time string into hours, minutes, and seconds, separated by the ':'.
+            (entered_hrs, entered_min, entered_sec) = user_time_str.split(':')
+            
+            user_time_dt = dt.timedelta(hours = int(entered_hrs), minutes= int(entered_min), seconds= int(entered_sec))
         
-        # PROCESS - Splits time string into hours, minutes, and seconds, separated by the ':'.
-        (entered_hrs, entered_min, entered_sec) = user_time_str.split(':')
+        except ValueError:
+            print("\n--X-- Not a valid time. Please enter a time in the format HH:mm:ss. --X--\n")
+            self.get_user_time()
         
-        user_time_dt = dt.timedelta(hours = int(entered_hrs), minutes= int(entered_min), seconds= int(entered_sec))
         return user_time_dt
 
 

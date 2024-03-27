@@ -3,7 +3,7 @@
 import datetime as dt
 from package import Package
 from hash_Table import hash_table
-from hub import Hub
+from distance_hub import Hub
 
 
 class Delivery_Truck:
