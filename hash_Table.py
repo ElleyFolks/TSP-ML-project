@@ -35,10 +35,12 @@ class hash_table:
 
 
     # RUBRIC - Section A of rubric, insertion function.
-        # FLOW - Inserts a new (key, value) pair into the hash table, or updates the value if the key already exists.
+        # FLOW - Inserts a new (key, value) pair into the hash table, 
+            # or updates the value if the key already exists.
     def insert_item(self, package_Id, value):
         '''
-        Inserts a new (key, value), or if key exists in hash bucket, will update value. Returns true if successful.
+        Inserts a new (key, value), or if key exists in hash bucket, will update value. 
+        Returns true if successful.
 
         Parameters:
             package_Id (hashable): The key to be inserted or updated.
@@ -58,7 +60,8 @@ class hash_table:
                 key_value[1] = value
                 return True
         
-        # If the (key, value) pair is new and hashes to a non-empty bucket, it will append to the list in the bucket.
+        # If the (key, value) pair is new and hashes to a non-empty bucket,
+            # it will append to the list in the bucket.
         new_key_value = [package_Id, value]
         bucket.append(new_key_value)
         return True
