@@ -29,35 +29,39 @@ class Hub:
         self.distances = distances
 
 
-    # A string representation of a hub object, formatted to print location, address and distances.
-    def __str__(self):
-            return f"Location: {self.location}, Address: {self.address}, Distance List: {self.distances}"
-    
-
     # FLOW - Gets distance from hub of a specific package address. Used in greedy algorithm to determine the closest hub.
     def get_distance(self, destination_address: str):
         '''
         Gets distance from hub to a destination address. Returns distance if address is found, otherwise None.
 
         Parameters:
-        - target_hub_address (str): The address of the target hub.
+        - destination_address (str): The address of the destination from the hub.
 
         Returns:
-        - distance (float or None): The distance from the hub to the target address, or None if the address is not found.
+        - destination_distance (float or None): The distance from the hub to the destination address, or None if the address is not found.
         '''
 
         #PROCESS - Iterates through the distances list to find the target address.
-        for hub_address, distance in self.distances:
+        for hub_address, destination_distance in self.distances:
             
             if hub_address == destination_address:
-                return distance
+                return destination_distance
     
         return None
 
 
     # FLOW - Reads in hub information from a CSV, populates a hash table with this info. Each row becomes a hub object.
     def import_hubs(hub_hash_table:hash_table):
-        
+        '''
+        Imports hub information from a CSV file and inserts hub objects into a hash table.
+
+        Parameters:
+        hub_hash_table (hash_table): The hash table to insert the hub objects into.
+
+        Returns:
+        None
+        '''
+
         with open("WGUPS Distance Table.csv") as csv_file:
             
             # PROCESS - Reads in a CSV file into a list.
@@ -69,9 +73,7 @@ class Hub:
             for row in csv_reader:
                 location, address, *distances = row
                 hub_address.append(address)
+
                 distances_list = list(zip(hub_address, distances))
-                
-            # PROCESS - Iterates through lists to create hub objects, inserts these objects into hash table.
-            for index, address in enumerate(hub_address):
-                hub = Hub(location, address, distances_list)
-                hub_hash_table.insert_item(hub.address, hub)
+
+                hub_hash_table.insert_item(address, Hub(location, address, distances_list))

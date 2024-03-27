@@ -4,7 +4,7 @@ import datetime as dt
 from package import Package
 from hub import Hub
 from hash_Table import hash_table
-from truck import Delivery_Truck
+from delivery import Delivery_Truck
 from user_interface import delivery_menu as menu
 
 # PROCESS - Creating hash tables, storing data from CSVs into buckets.

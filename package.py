@@ -63,7 +63,9 @@ class Package:
         Returns:
             str: A formatted string containing all package information.
         '''
-        return f"Package ID: {self.package_id}, Address: {self.address}, {self.city}, {self.state}, {self.zip_code}, Deadline: {self.deadline}, Weight: {self.weight} lbs, Current Location: {self.present_Location}, Delivery Status: {self.delivery_status}, Departure Time: {self.departure_time}, Deliver Time: {self.delivery_time}"
+        package_status:str = f"Package ID: {self.package_id}, Delivery Status: {self.delivery_status}, Departure time from HUB: {self.departure_time} Deadline: {self.deadline},  Anticipated Time Delivered: {self.delivery_time}, Weight: {self.weight} lbs\n"
+        package_local:str = f"Current Location: {self.present_Location}, Destination Address: {self.address}, {self.city}, {self.state}, {self.zip_code}\n"
+        return package_status + package_local
 
 
     # FLOW - Creates a package object from a each row of the CSV.

@@ -65,10 +65,10 @@ class Delivery_Truck:
             # PROCESS - Searches through packages for package with least distance.
             for package_id in self.truck_package_list:
                 package:Package = package_hash_table.search_item(package_id)
-                destinationHub: Hub = hub_hash_table.search_item(package.get_formatted_address())
+                destination_hub: Hub = hub_hash_table.search_item(package.get_formatted_address())
 
                 # PROCESS - Gets distance from truck's current location to package destination hub
-                package_distance = destinationHub.get_distance(truck_location)
+                package_distance = destination_hub.get_distance(truck_location)
                 
                 # PROCESS - Protection in the case that the distance is empty.
                 if(package_distance == None):
