@@ -17,14 +17,14 @@ class Delivery_Truck:
     '''
 
     def __init__(self, packages:list = None, truck_departure_time = None):
-        """
+        '''
         Initializes a Truck object.
         Uses packages 'loaded' onto truck with a list passed in, and the truck's departure time from the central HUB.
 
         Args:
             packages (list, optional): A list of packages to be loaded onto the truck. Defaults to None.
             truck_departure_time (datetime, optional): The departure time of the truck. Defaults to None.
-        """
+        '''
         
         # Initializing attributes.
         packages.sort()

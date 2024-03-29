@@ -1,6 +1,8 @@
 # RUBRIC - Section C1, Student Name: Elley Folks, Student ID: 010139574 
 
 import datetime as dt
+
+# Custom made classes.
 from package import Package
 from distance_hub import Hub
 from hash_Table import hash_table
@@ -24,8 +26,7 @@ def main():
 
     # Truck 2 - leaves when packages delayed in flight arrive
     load_2: list = [2, 3, 4, 7, 8, 18, 25, 32, 34, 6, 28, 36, 38]
-    delivery_truck_2: Delivery_Truck = Delivery_Truck(load_2,
-                                                      truck_departure_time= dt.timedelta(hours=9, minutes= 30))
+    delivery_truck_2: Delivery_Truck = Delivery_Truck(load_2,truck_departure_time= dt.timedelta(hours=9, minutes= 30))
 
     # Truck 3 - leaves when truck driver is available
     load_3: list = [9, 10, 11, 12, 17, 21, 35, 22, 23, 24, 26, 27, 33, 39]
@@ -37,8 +38,7 @@ def main():
     delivery_truck_3.deliver_packages(package_hash_table, hub_hash_table)
 
     # PROCESS - Combined distance traveled of each truck (must be under 140 miles).
-    total_distance = delivery_truck_1.miles_traveled + delivery_truck_2.miles_traveled 
-    + delivery_truck_3.miles_traveled
+    total_distance = delivery_truck_1.miles_traveled + delivery_truck_2.miles_traveled + delivery_truck_3.miles_traveled
 
     print(f"\n --*-- Total milage of all trucks: {total_distance} miles. --*--\n")
     return delivery_truck_1, delivery_truck_2, delivery_truck_3, total_distance
