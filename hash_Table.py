@@ -13,7 +13,7 @@ class hash_table:
     def __init__(self, length:int = 40):
         '''
         Initializes a new instance of the hash table class with the specified length.
-
+ 
         Args:
             length (int, optional): The initial length of the hash table. Defaults to 40.
 
